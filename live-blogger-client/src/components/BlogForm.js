@@ -24,7 +24,7 @@ const BlogForm = () => {
     const docRef = await firestore.collection("posts").add(post);
     console.log(docRef);
 
-    setToggleRefetch(!toggleRefetch);
+    // setToggleRefetch(!toggleRefetch);
   };
 
   return (

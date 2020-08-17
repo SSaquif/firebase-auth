@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { firestore } from "../firebase";
+import { PostContext } from "./contexts/PostContext";
 
 const Post = ({ post: { id, title, content, user } }) => {
   const postDate = new Date().getDate();
 
-  const handlePostDelete = () => {
+  const { toggleRefetch, setToggleRefetch } = useContext(PostContext);
+
+  const handlePostDelete = async () => {
     console.log(id);
+    //Long Form
+    //await firestore.collection("posts").doc(id).delete();
+    //Short Hand
+    await firestore.doc(`posts/${id}`).delete();
+    //setToggleRefetch(!toggleRefetch);
   };
 
   return (
