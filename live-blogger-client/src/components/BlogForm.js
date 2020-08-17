@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { PostContext } from "./contexts/PostContext";
+import { firestore } from "../firebase";
 
 const BlogForm = () => {
-  const { posts, setPosts } = useContext(PostContext);
+  const { toggleRefetch, setToggleRefetch } = useContext(PostContext);
 
   const [blogTitle, setBlogTitle] = useState("Title");
-  const [blogBody, setBlogBody] = useState("What's on your mind");
+  const [blogContent, setblogContent] = useState("What's on your mind");
 
   const handleChange = (ev, setState) => {
     setState(ev.target.value);
@@ -14,15 +15,16 @@ const BlogForm = () => {
 
   const handleClear = (ev) => {
     setBlogTitle("");
-    setBlogBody("");
+    setblogContent("");
   };
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
-    const newPosts = [...posts];
-    newPosts.push({ title: blogTitle, body: blogBody });
-    console.log(newPosts);
-    setPosts(newPosts);
+    const post = { title: blogTitle, content: blogContent };
+    const docRef = await firestore.collection("posts").add(post);
+    console.log(docRef);
+
+    setToggleRefetch(!toggleRefetch);
   };
 
   return (
@@ -33,8 +35,8 @@ const BlogForm = () => {
           value={blogTitle}
         />
         <BodyInput
-          onChange={(ev) => handleChange(ev, setBlogBody)}
-          value={blogBody}
+          onChange={(ev) => handleChange(ev, setblogContent)}
+          value={blogContent}
         />
         <ButtonWrapper>
           <FormSubmitButton type="submit">Submit</FormSubmitButton>
