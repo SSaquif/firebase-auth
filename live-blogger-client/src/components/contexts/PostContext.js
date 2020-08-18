@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext } from "react";
-import allPosts from "../../data/posts";
 import { firestore } from "../../firebase";
 
 export const PostContext = createContext(null);
