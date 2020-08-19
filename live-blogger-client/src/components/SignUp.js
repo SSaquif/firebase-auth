@@ -33,7 +33,7 @@ const SignUp = () => {
         <SignUpPass
           type="password"
           placeholder="Confirm Password"
-          value={password}
+          value={confirmPassword}
           onChange={(ev) => {
             handleChange(ev.target.value, setConfirmPassword);
           }}

@@ -1,11 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { PostContext } from "./contexts/PostContext";
+
 import { firestore } from "../firebase";
 
 const BlogForm = () => {
-  const { toggleRefetch, setToggleRefetch } = useContext(PostContext);
-
   const [blogTitle, setBlogTitle] = useState("Title");
   const [blogContent, setblogContent] = useState("What's on your mind");
 
@@ -23,8 +21,6 @@ const BlogForm = () => {
     const post = { title: blogTitle, content: blogContent };
     const docRef = await firestore.collection("posts").add(post);
     console.log(docRef);
-
-    // setToggleRefetch(!toggleRefetch);
   };
 
   return (

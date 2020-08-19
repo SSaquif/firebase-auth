@@ -2,10 +2,19 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
+import { auth } from "../firebase";
 
 const Navbar = () => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser, dispatchCurrentUser } = useContext(CurrentUserContext);
 
+  const handleSignOut = async (ev) => {
+    ev.preventDefault();
+    console.log("hello");
+    const result = auth.signOut();
+    console.log(result);
+  };
+
+  console.log(currentUser.userInfo);
   return (
     <>
       <NavWrapper>
@@ -13,11 +22,15 @@ const Navbar = () => {
           <NavItems to="/">SS-Blog</NavItems>
         </Left>
         <Right>
-          {currentUser.signedIn ? (
-            <>Profile</>
+          {currentUser.userInfo ? (
+            <>
+              <p>Hi {currentUser.userInfo.user.displayName}</p>
+              <NavItems to="/">Profile</NavItems>
+              <SignOutButton onClick={handleSignOut}>Sign Out</SignOutButton>
+            </>
           ) : (
             <>
-              <NavItems to="/login">Log In</NavItems>
+              <NavItems to="/login">Sign In</NavItems>
               <NavItems to="/SignUp">Sign Up</NavItems>
             </>
           )}
@@ -45,10 +58,19 @@ const Right = styled.div`
   border: 2px solid red;
 `;
 
+const SignOutButton = styled.button`
+  all: unset;
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+  margin: 0.5%;
+  cursor: pointer;
+`;
+
 const NavItems = styled(NavLink)`
   text-decoration: none;
   color: inherit;
-  margin: 0.5%;
+  margin: 1%;
+  cursor: pointer;
 `;
 
 export default Navbar;

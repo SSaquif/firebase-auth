@@ -3,19 +3,25 @@ import React, { createContext, useReducer } from "react";
 export const CurrentUserContext = createContext(null);
 
 const initialState = {
-  signedIn: false,
+  userInfo: null,
 };
 
 const reducer = (state, { type, payload }) => {
   const newState = { ...state };
   switch (type) {
-    case "log-in":
+    case "sign-in":
+      newState.userInfo = payload;
       break;
-    case "log-out":
+
+    case "sign-out":
+      newState.userInfo = payload.user;
       break;
+
     default:
+      // console.log("here");
       break;
   }
+  console.log(newState);
   return newState;
 };
 

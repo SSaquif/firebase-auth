@@ -1,14 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import styled from "styled-components";
-import { signInWithGoogle } from "../firebase";
+import { auth, googleAuthProvider } from "../firebase";
+// import { signInWithGoogle } from "../firebase";
 
 const SignIn = () => {
+  const { dispatchCurrentUser } = useContext(CurrentUserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleChange = (state, setState) => {
     console.log(state);
     setState(state);
+  };
+
+  const signInWithGoogle = async (ev) => {
+    // I am handling this myself, ie. by keep track of Login/Logout
+    // Alternatively could use onAuthStateChanged(callback)
+    // See my notes on Steve Kinney's firebase workshop
+    // The function fires every time use logs IN/Logs out
+    // So I could lift this function up to CurrentUsercontext, (I think)
+    // Switched to Alternate option: More Elegant
+    ev.preventDefault();
+    try {
+      const result = await auth.signInWithPopup(googleAuthProvider);
+      const token = result.credential.accessToken;
+
+      //Alternate option
+      auth.onAuthStateChanged((user) => {
+        console.log("Auth changed", user);
+        if (user) {
+          dispatchCurrentUser({ type: "sign-in", payload: { token, user } });
+        } else {
+          dispatchCurrentUser({ type: "sign-out", payload: { user } });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
