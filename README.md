@@ -4,7 +4,7 @@ Please follow [Scott's Repo](https://github.com/cb-i-4/m6-3-dbs--firebase) on ho
 
 ## Set Up
 
-Create a **firebaseConfig.js** file and put your firebase config there and export it. Add this file to .gitignore. [But google tells me it's safe to not hide your API keys](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public). So you might not actually have to put it in .gitignore, but just to be safe. You might not need all of these properties.
+Create a **firebaseConfig.js** file and put your firebase configurations there and export it. Add this file to .gitignore. [But google tells me it's safe to not hide your API keys for firebase](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public). So you might not actually have to put it in .gitignore, but just to be safe. You might not need all of these properties.
 
 ```javascript
 const firebaseConfig = {
@@ -21,7 +21,7 @@ const firebaseConfig = {
 export default firebaseConfig;
 ```
 
-In your **firebase.js** now we import firebase, firebase auth and set up all the other things. See the file
+In your **firebase.js** now we import firebase, firebase auth and set up all the other things. See the file **firebase.js**
 
 ```javascript
 // Import firebase and firebase auth
@@ -113,7 +113,7 @@ We then call it on the sign out button in the **Navbar** component. See **Navbar
 
 You don't want to have to sign in a million times a day. Therefore we want some persistance. If we leave the page and comback, the app will render again. So we will fire up an **useEffect()** back in our context. See **CurrentUserContext.js**
 
-In the useEffect() we will once again use the auth.onAuthStateChanged() function and this time store it in a variable (named unlisten in this case). onAuthStateChanged() returns a function , which we clear when our Context Provider unmounts. So we call unlisten() in the return of our useEffect() and clean up our listener and prevent any memory leak.
+In the useEffect() we will once again use the auth.onAuthStateChanged() function and this time store it's result in a variable (named unlisten in this case). onAuthStateChanged() returns a function , which we clear when our Context Provider unmounts. So we call unlisten() in the return of our useEffect() and clean up our listener and prevent any memory leak.
 
 ```javascript
 useEffect(() => {
@@ -130,7 +130,7 @@ useEffect(() => {
 
 ## What's Next.
 
-Now our React State will update evrytime the user logs in or out. We can use this information in other components to render them accordingly. See Navbar, Profile, even the redirection in SignIn and SignOut
+Now our React State will update everytime the user logs in or out. We can use this information in other components to render them accordingly. See Navbar, Profile, even the redirection in SignIn and SignOut
 
 When the user is logged in, we should be able to access some unique information about said user. For example the email and uid (I beleive this is unique, not sure if it changes). And perhaps this user wants to make a HTTP request (fetch) to the backend server, perhaps to retrieve some info from your mongo database. But maybe you want to make sure that the user actually has the right to retrieve that information. So when someone first make a post etc that adds/updates something in the database you also probably want to store the uid/email along with it. Next time you retrieve it, in your fetch you should also include this information and check against the database to make sure if you can send back that information.
 
@@ -138,6 +138,6 @@ When the user is logged in, we should be able to access some unique information 
 
 This is basically my flow when I work with firebase auth. So there could be issues I have not faced :stuck_out_tongue_closed_eyes:
 
-You can run this app after to **add a firebaseConfig.js file in the src folder**, and find out who you are thanks to google.
+You can run this app after to **add a firebaseConfig.js file in the src folder**, and find out who you are thanks to google :grin:
 
 The sign in and sign up using email doesn't work. If you want you can play around with that, but I suggest you work on the project.
