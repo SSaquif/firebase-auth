@@ -2,7 +2,20 @@
 
 Please follow [Scott's Repo](https://github.com/cb-i-4/m6-3-dbs--firebase) on how to first configure [firebase](https://firebase.google.com/). Get yours config object etc.
 
-## Set Up
+_This is basically my flow when I work with firebase auth. So there could be issues I have not faced :stuck_out_tongue_closed_eyes:_
+
+## Contents
+
+- [Set Up Configuration](#Set-Up-Configuration)
+- [Setting up CurrentUserContext](#Setting-Up-CurrentUserContext)
+- [Getting Started with Auth](#Getting-Started-with-Auth)
+  - [Signing In](#Signing-In)
+  - [Signing Out](#Signing-Out)
+  - [Some Persistance](#Some-Persistance)
+- [What's Next](#What's-Next)
+- [Notes](#Notes)
+
+## Set Up Configuration
 
 Create a **firebaseConfig.js** file and put your firebase configurations there and export it. Add this file to .gitignore. [But google tells me it's safe to not hide your API keys for firebase](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public). So you might not actually have to put it in .gitignore, but just to be safe. You might not need all of these properties.
 
@@ -41,7 +54,9 @@ export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export default firebase;
 ```
 
-## Setting up CurrentUserContext (you could use Redux or any othe state management library as well)
+## Setting Up CurrentUserContext
+
+_You could use Redux or any othe state management library as well_
 
 I am using a reducer to handle my currentUser state. There are three cases right now.
 See the **CurrentUserContext.js** file.
@@ -128,15 +143,13 @@ useEffect(() => {
 }, []);
 ```
 
-## What's Next.
+## What's Next
 
 Now our React State will update everytime the user logs in or out. We can use this information in other components to render them accordingly. See Navbar, Profile, even the redirection in SignIn and SignOut
 
 When the user is logged in, we should be able to access some unique information about said user. For example the email and uid (I beleive this is unique, not sure if it changes). And perhaps this user wants to make a HTTP request (fetch) to the backend server, perhaps to retrieve some info from your mongo database. But maybe you want to make sure that the user actually has the right to retrieve that information. So when someone first make a post etc that adds/updates something in the database you also probably want to store the uid/email along with it. Next time you retrieve it, in your fetch you should also include this information and check against the database to make sure if you can send back that information.
 
 ## Notes
-
-This is basically my flow when I work with firebase auth. So there could be issues I have not faced :stuck_out_tongue_closed_eyes:
 
 You can run this app after to **add a firebaseConfig.js file in the src folder**, and find out who you are thanks to google :grin:
 
