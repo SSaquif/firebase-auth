@@ -2,36 +2,30 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
-import { auth } from "../firebase";
 
 const Navbar = () => {
-  const { currentUser, dispatchCurrentUser } = useContext(CurrentUserContext);
-
-  const handleSignOut = async (ev) => {
-    ev.preventDefault();
-    console.log("hello");
-    const result = auth.signOut();
-    console.log(result);
-  };
+  const { currentUser, handleSignOut } = useContext(CurrentUserContext);
 
   console.log(currentUser.userInfo);
+
   return (
     <>
       <NavWrapper>
         <Left>
-          <NavItems to="/">SS-Blog</NavItems>
+          <NavItems to="/">Firebase Auth</NavItems>
         </Left>
         <Right>
           {currentUser.userInfo ? (
             <>
-              <p>Hi {currentUser.userInfo.user.displayName}</p>
-              <NavItems to="/">Profile</NavItems>
+              <NavItems to="/">
+                Hi, {currentUser.userInfo.user.displayName}
+              </NavItems>
               <SignOutButton onClick={handleSignOut}>Sign Out</SignOutButton>
             </>
           ) : (
             <>
-              <NavItems to="/login">Sign In</NavItems>
-              <NavItems to="/SignUp">Sign Up</NavItems>
+              <NavItems to="/signin">Sign In</NavItems>
+              <NavItems to="/signup">Sign Up</NavItems>
             </>
           )}
         </Right>
@@ -48,6 +42,7 @@ const NavWrapper = styled.div`
 const Left = styled.div`
   color: red;
   flex: 1;
+  border: 2px solid cyan;
 `;
 
 const Right = styled.div`
@@ -62,7 +57,7 @@ const SignOutButton = styled.button`
   all: unset;
   color: inherit;
   -webkit-text-fill-color: inherit;
-  margin: 0.5%;
+  margin: 1%;
   cursor: pointer;
 `;
 
