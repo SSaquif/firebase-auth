@@ -1,5 +1,7 @@
 # Firebase Auth
 
+:exclamation: :exclamation: Please DO NOT copy and paste code. Very Important you understand what's going on. :exclamation: :exclamation:
+
 Please follow [Scott's Repo](https://github.com/cb-i-4/m6-3-dbs--firebase) on how to first configure [firebase](https://firebase.google.com/) through your browser and receive your config info, if u haven't already.
 
 _This is basically my flow when I work with firebase auth. So there could be issues I have not faced :stuck_out_tongue_closed_eyes:_
@@ -17,7 +19,7 @@ _This is basically my flow when I work with firebase auth. So there could be iss
 
 ## Set Up Configuration
 
-Create a **firebaseConfig.js** file and put your firebase configurations there and export it. Add this file to .gitignore. [But google tells me it's safe to not hide your API keys for firebase](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public). So you might not actually have to put it in .gitignore, but just to be safe. You might not need all of these properties.
+Create a **firebaseConfig.js** file and put your firebase configurations there and export it. Add this file to .gitignore. [But google tells me it's safe to not hide your API keys for firebase](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public). So you might not actually have to put it in .gitignore, but just to be safe. You also might not need all of these properties.
 
 ```javascript
 const firebaseConfig = {
