@@ -1,6 +1,6 @@
 # Firebase Auth
 
-Please follow Scott's repo on how to first configure [firebase](https://firebase.google.com/). Get yours config object etc.
+Please follow [Scott's Repo](https://github.com/cb-i-4/m6-3-dbs--firebase) on how to first configure [firebase](https://firebase.google.com/). Get yours config object etc.
 
 ## Set Up
 
