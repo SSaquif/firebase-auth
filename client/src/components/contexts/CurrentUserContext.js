@@ -40,10 +40,14 @@ export const CurrentUserContextProvider = ({ children }) => {
   const [currentUser, dispatchCurrentUser] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    const unlisten = auth.onAuthStateChanged((user) => {
       console.log(user);
       dispatchCurrentUser({ type: "app-refresh", payload: { user } });
     });
+
+    return () => {
+      unlisten();
+    };
   }, []);
 
   const signInWithGoogle = async (ev) => {
@@ -52,7 +56,7 @@ export const CurrentUserContextProvider = ({ children }) => {
       await auth.signInWithPopup(googleAuthProvider);
 
       auth.onAuthStateChanged((user) => {
-        console.log("Auth changed", user);
+        console.log("Auth state changed", user);
         if (user) {
           dispatchCurrentUser({ type: "sign-in", payload: { user } });
         } else {

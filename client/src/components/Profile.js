@@ -11,7 +11,7 @@ function Profile() {
       {currentUser.userInfo ? (
         <ProfilePic src={currentUser.userInfo.user.photoURL} />
       ) : (
-        <ProfilePic src={who} style={{ width: "50%" }} />
+        <ProfilePic src={who} style={{ width: "35%" }} />
       )}
     </>
   );
@@ -20,7 +20,7 @@ function Profile() {
 const ProfilePic = styled.img`
   border-radius: 50%;
   display: flex;
-  margin: 5% auto;
+  margin: 2.5% auto;
   border: 4px solid green;
 `;
 export default Profile;
