@@ -69,15 +69,15 @@ See the **CurrentUserContext.js** file.
 
 ## Getting Started with Auth
 
-Next we need 2 functions, one for signing in and another for signing out. Then we will pass them through our context providers, so that our Sign In and Sign Out buttons located elsewhere can use them.
+Next we need 2 functions, one for signing in and another for signing out. Then we will pass them through our context provider, so that our Sign In and Sign Out buttons located elsewhere can use them.
 
 ### Signing In
 
-So here we use 2 function from firebase auth.
+So here we will use 2 functions from firebase auth.
 
 1. **signInWithPopup(googleAuthProvider):** We pass it the googleAuthProvider that we import at the begining. This shows the pop up on the screen. The once you choose your account, that's it you are signed in.
 
-2. **onAuthStateChanged(callback):** This function is basically where the magic happens. This function is kind of like an Event Listener, in that it is listening for changes in the authentication state. In the callback of this function, you have access to the user object generated when you sign in or sign out. Everytime a sign in or sign out event occurs, this function runs. It runs a user object with a lot of properties (not all of them useful, but **DEFINITELY** check it out) when you sign in. It returns null when the user signs out. We store this user object or null in our React state by doing a dispatch to the reducer. Next we move back to the home page using history.push('/').
+2. **onAuthStateChanged(callback):** This function is basically where the magic happens. This function is kind of like an Event Listener, in that it is listening for changes in the authentication state. In the callback of this function, you have access to the user object generated when you sign in or sign out. Everytime a sign in or sign out event occurs, this function runs. It returns a user object with a lot of properties (not all of them useful, but **DEFINITELY** check it out) when you sign in. It returns **null** when the user signs out. We store this user object or null in our React state by doing a dispatch to the reducer. Next we move back to the home page using history.push('/').
 
 ```javascript
 const signInWithGoogle = async (ev) => {
