@@ -41,7 +41,7 @@ export const CurrentUserContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unlisten = auth.onAuthStateChanged((user) => {
-      console.log(user);
+      console.log("The use effect one fires");
       dispatchCurrentUser({ type: "app-refresh", payload: { user } });
     });
 
@@ -55,14 +55,30 @@ export const CurrentUserContextProvider = ({ children }) => {
     try {
       await auth.signInWithPopup(googleAuthProvider);
 
-      auth.onAuthStateChanged((user) => {
+      const unlisten = auth.onAuthStateChanged(async (user) => {
         console.log("Auth state changed", user);
         if (user) {
+          //check in my mongo db if the user exists, if not create new one
+          const response = await fetch("/api/auth/googleSignIn", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(user),
+          });
+
+          const userInfoFromMongoDB = await response.json();
+          console.log(userInfoFromMongoDB);
+
           dispatchCurrentUser({ type: "sign-in", payload: { user } });
         } else {
+          // Thanks to the unlisten, I never actually get inside this else
+          // its the listener on useEffect that takes care of the sign out
+          console.log(
+            "Observer still fires with unlisten() below when I sign out"
+          );
           dispatchCurrentUser({ type: "sign-out", payload: { user } });
         }
         history.push("/");
+        unlisten();
       });
     } catch (err) {
       console.log(err);
