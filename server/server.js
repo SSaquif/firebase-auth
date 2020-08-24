@@ -13,11 +13,10 @@ const auth = require("./routes/auth");
 
 app.use("/api/auth", auth); //prefix the auth routes with /api/auth
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-//Getting the port in use error
 process.once("SIGUSR2", () => {
   server.close(() => {
     process.kill(process.pid, "SIGUSR2");
