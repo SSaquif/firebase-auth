@@ -2,8 +2,7 @@
 
 :exclamation: :exclamation: Please DO NOT copy and paste code. Very Important you understand what's going on. :exclamation: :exclamation:
 
-:exclamation: :exclamation: :exclamation: :exclamation:
-I have updated this repo on August 24 10:00 PM.
+:exclamation: :exclamation: I have updated this repo on August 24 10:00 PM. :exclamation: :exclamation:
 
 1.  onAuthStateChanged() is now only called in the useEffect, it is unnecessary to have anywhere else as that listener will trigger anytime a signIn or a signOut happens
 
@@ -11,7 +10,7 @@ I have updated this repo on August 24 10:00 PM.
 
 3.  The Readme has been updated but I might left some old instructions in by mistake. Ask me if something doesn't make sense
 
-:exclamation: :exclamation: exclamation: :exclamation:
+:exclamation: :exclamation: :exclamation: :exclamation:
 
 Please follow [Scott's Repo](https://github.com/cb-i-4/m6-3-dbs--firebase) on how to first configure [firebase](https://firebase.google.com/) through your browser and receive your config info, if u haven't already.
 
