@@ -182,7 +182,3 @@ When the user is logged in, we should be able to access some unique information 
 You can run this app after to **add a firebaseConfig.js file in the src folder**, and find out who you are thanks to google :grin:
 
 The sign in and sign up using email doesn't work. If you want you can play around with that, but I suggest you work on the project.
-
-```
-
-```
