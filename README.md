@@ -21,8 +21,8 @@ _This is basically my flow when I work with firebase auth. So there could be iss
 - [Set Up Configuration](#Set-Up-Configuration)
 - [Setting up CurrentUserContext](#Setting-Up-CurrentUserContext)
 - [Getting Started with Auth](#Getting-Started-with-Auth)
-  - [Adding a Observer/Listener to our Application](#Adding-a-Observer/Listener-to-our-Application)
-    - [Some Persistance](#Some-Persistance)
+  - [Adding an Observer/Listener to Our Application](#Adding-an-Observerto-Our-Application)
+    - [Persistance](#Persistance)
   - [Signing In](#Signing-In)
   - [Signing Out](#Signing-Out)
 - [What's Next](#What's-Next)
@@ -82,9 +82,9 @@ See the **CurrentUserContext.js** file.
 
 We need 2 functions, one for signing in and another for signing out. Then we will pass them through our context provider, so that our Sign In and Sign Out buttons located elsewhere can use them. But First we set somethings in our useEffect().
 
-### Adding a Observer/Listener to our Application
+### Adding an Observer to Our Application
 
-We need something similar to an Event Listener, that monitors when a user logs in or out and does something with that information. Firebase gives us the onAuthStateChanged(callback) function to do just that.
+We need something similar to an Event Listener (or an observer as firebase docs calls it), that monitors when a user logs in or out and does something with that information. Firebase gives us the onAuthStateChanged(callback) function to do just that.
 
 1. **onAuthStateChanged(callback):** This function is basically where the magic happens. This function is kind of like an Event Listener, in that it is listening for changes in the authentication state. In the callback of this function, you have access to the user object generated when you sign in or sign out. Everytime a sign in or sign out event occurs, this function runs. It returns a user object with a lot of properties (not all of them useful, but **DEFINITELY** check it out) when you sign in. It returns **null** when the user signs out. We store this user object or null in our React state by doing a dispatch to the reducer. Next we move back to the home page using history.push('/').
 
@@ -94,40 +94,39 @@ onAuthStateChanged() returns a function , which we clear when our Context Provid
 
 Since our useEffect loads up this observer every single time we exit our app and come back, the callbak is fired once right away when the app mounts and hence it gets the last authentication state it had previously stored when the user closed the app. This is why we already have persistance
 
-````javascript
-  useEffect(() => {
-    //When the App loads I will attach my onAuthStateChanged Observers
-    const unlisten = auth.onAuthStateChanged(async (user) => {
-      console.log("Auth state changed", user);
-      if (user) {
-        ////////////If this is a Sign In we additionally want to contact our BE server//////////
-        const response = await fetch("/api/auth/googleSignIn", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(user),
-        });
+```javascript
+useEffect(() => {
+  //When the App loads I will attach my onAuthStateChanged Observers
+  const unlisten = auth.onAuthStateChanged(async (user) => {
+    console.log("Auth state changed", user);
+    if (user) {
+      ////////////If this is a Sign In we additionally want to contact our BE server//////////
+      const response = await fetch("/api/auth/googleSignIn", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(user),
+      });
 
-        const userInfoFromMongoDB = await response.json();
-        console.log(userInfoFromMongoDB);
-        // We probaly want to do something more useful than a console log,
-        // Perhaps check the response from BE and see if everything is all right
-        // Befored doing your dispatch
-        ////////////////////////////////////////////////////////////////////////
+      const userInfoFromMongoDB = await response.json();
+      console.log(userInfoFromMongoDB);
+      // We probaly want to do something more useful than a console log,
+      // Perhaps check the response from BE and see if everything is all right
+      // Befored doing your dispatch
+      ////////////////////////////////////////////////////////////////////////
 
-        dispatchCurrentUser({ type: "sign-in", payload: { user } });
-      } else {
-        console.log(
-          "Observer still fires with unlisten() below when I sign out"
-        );
-        dispatchCurrentUser({ type: "sign-out", payload: { user } });
-      }
-    });
+      dispatchCurrentUser({ type: "sign-in", payload: { user } });
+    } else {
+      console.log("Observer still fires with unlisten() below when I sign out");
+      dispatchCurrentUser({ type: "sign-out", payload: { user } });
+    }
+  });
 
-    // Unsubscribe to this listener when app unmounts, preventing memory leaks
-    return () => {
-      unlisten();
-    };
-  }, []);
+  // Unsubscribe to this listener when app unmounts, preventing memory leaks
+  return () => {
+    unlisten();
+  };
+}, []);
+```
 
 ### Signing In
 
@@ -135,14 +134,14 @@ Since our useEffect loads up this observer every single time we exit our app and
 
 ```javascript
 const signInWithGoogle = async (ev) => {
-ev.preventDefault();
-try {
-  await auth.signInWithPopup(googleAuthProvider);
-} catch (err) {
-  console.log(err);
-}
+  ev.preventDefault();
+  try {
+    await auth.signInWithPopup(googleAuthProvider);
+  } catch (err) {
+    console.log(err);
+  }
 };
-````
+```
 
 Next we just use the sign out function where we need it. In this cause the Sign In button on the NavBar component. See **SignIn.js**
 
