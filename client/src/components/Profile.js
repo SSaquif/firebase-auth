@@ -9,7 +9,14 @@ function Profile() {
   return (
     <>
       {currentUser.userInfo ? (
-        <ProfilePic src={currentUser.userInfo.user.photoURL} />
+        <>
+          {" "}
+          <ProfilePic src={currentUser.userInfo.user.photoURL} />
+          <form enctype="multipart/form-data">
+            <input type="file" name="avatar" />
+            <button type="submit">Submit</button>
+          </form>
+        </>
       ) : (
         <ProfilePic src={who} style={{ width: "35%" }} />
       )}
