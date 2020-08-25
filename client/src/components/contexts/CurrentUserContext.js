@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 export const CurrentUserContext = createContext(null);
 
 const initialState = {
+  loading: true,
   userInfo: null,
 };
 
@@ -12,20 +13,14 @@ const reducer = (state, { type, payload }) => {
   const newState = { ...state };
 
   switch (type) {
-    case "app-refresh":
-      if (payload.user) {
-        newState.userInfo = payload;
-      } else {
-        newState.userInfo = null;
-      }
-      break;
-
     case "sign-in":
       newState.userInfo = payload;
+      newState.loading = false;
       break;
 
     case "sign-out":
       newState.userInfo = null;
+      newState.loading = false;
       break;
 
     default:
@@ -40,9 +35,26 @@ export const CurrentUserContextProvider = ({ children }) => {
   const [currentUser, dispatchCurrentUser] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const unlisten = auth.onAuthStateChanged((user) => {
-      console.log(user);
-      dispatchCurrentUser({ type: "app-refresh", payload: { user } });
+    //When the App loads I will attach my onAuthStateChanged Observers
+    const unlisten = auth.onAuthStateChanged(async (user) => {
+      console.log("Auth state changed", user);
+      if (user) {
+        const response = await fetch("/api/auth/googleSignIn", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(user),
+        });
+
+        const userInfoFromMongoDB = await response.json();
+        console.log(userInfoFromMongoDB);
+
+        dispatchCurrentUser({ type: "sign-in", payload: { user } });
+      } else {
+        console.log(
+          "Observer still fires with unlisten() below when I sign out"
+        );
+        dispatchCurrentUser({ type: "sign-out", payload: { user } });
+      }
     });
 
     return () => {
@@ -53,24 +65,18 @@ export const CurrentUserContextProvider = ({ children }) => {
   const signInWithGoogle = async (ev) => {
     ev.preventDefault();
     try {
+      // auth.signInWithPopup() will trigger the callback of onAuthStateChanged()
+      // on the useEffect
       await auth.signInWithPopup(googleAuthProvider);
-
-      auth.onAuthStateChanged((user) => {
-        console.log("Auth state changed", user);
-        if (user) {
-          dispatchCurrentUser({ type: "sign-in", payload: { user } });
-        } else {
-          dispatchCurrentUser({ type: "sign-out", payload: { user } });
-        }
-        history.push("/");
-      });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleSignOut = async (ev) => {
+  const handleSignOut = (ev) => {
     ev.preventDefault();
+    // auth.signOut() will trigger the callback of onAuthStateChanged()
+    // on the useEffect
     auth.signOut();
     history.push("/");
   };
