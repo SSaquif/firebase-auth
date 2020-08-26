@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./Navbar";
+import FileUpload from "./FileUpload";
 import Profile from "./Profile";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -23,6 +24,9 @@ const App = () => {
             </Route>
             <Route path="/signup">
               <SignUp />
+            </Route>
+            <Route path="/multerFileUpload">
+              <FileUpload />
             </Route>
           </Switch>
         </>

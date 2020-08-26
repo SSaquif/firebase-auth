@@ -28,6 +28,7 @@ const Navbar = () => {
               <NavItems to="/signup">Sign Up</NavItems>
             </>
           )}
+          <NavItems to="/multerFileUpload">Multer</NavItems>
         </Right>
       </NavWrapper>
     </>
