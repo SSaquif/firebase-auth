@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./Navbar";
-import FileUpload from "./FileUpload";
+import MulterFileUpload from "./MulterFileUpload";
+import GridFileUpload from "./GridFileUpload";
 import Profile from "./Profile";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -26,7 +27,10 @@ const App = () => {
               <SignUp />
             </Route>
             <Route path="/multerFileUpload">
-              <FileUpload />
+              <MulterFileUpload />
+            </Route>
+            <Route path="/multerGridFileUpload">
+              <GridFileUpload />
             </Route>
           </Switch>
         </>

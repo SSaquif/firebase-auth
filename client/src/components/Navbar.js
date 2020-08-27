@@ -29,6 +29,7 @@ const Navbar = () => {
             </>
           )}
           <NavItems to="/multerFileUpload">Multer</NavItems>
+          <NavItems to="/multerGridFileUpload">Multer+Grid</NavItems>
         </Right>
       </NavWrapper>
     </>

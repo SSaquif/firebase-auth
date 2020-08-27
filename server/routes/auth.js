@@ -2,17 +2,16 @@ const express = require("express");
 const router = express.Router();
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
+
 require("dotenv").config();
 
 const MongoURI = process.env.MONGO_URI;
 console.log(MongoURI);
+
 const MongoOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-
-require("dotenv").config();
-// console.log("in auth.js", process.env.MONGO_URI);
 
 router.post("/googleSignIn", async (req, res) => {
   const client = await MongoClient(MongoURI, MongoOptions);

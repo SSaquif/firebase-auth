@@ -1,9 +1,8 @@
 const express = require("express");
-const router = express.Router();
-const MongoClient = require("mongodb").MongoClient;
-const assert = require("assert");
-const multer = require("multer");
 const fs = require("fs");
+const multer = require("multer");
+
+const router = express.Router();
 
 const upload = multer({ dest: "uploads/" });
 
@@ -11,7 +10,7 @@ console.log(`${process.cwd()}/uploads`);
 
 require("dotenv").config();
 
-router.post("/updateProfile", upload.single("file1"), (req, res) => {
+router.post("/addSingleMulterFile", upload.single("file1"), (req, res) => {
   console.log("hello");
   console.log(req.file);
   console.log(req.body);

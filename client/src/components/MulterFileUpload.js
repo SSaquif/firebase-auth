@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const FileUpload = () => {
+function MulterFileUpload() {
   const [file1, setfile1] = useState({});
   const [text, setText] = useState("");
 
@@ -20,7 +20,7 @@ const FileUpload = () => {
       console.log(key[0] + ", " + key[1]);
     }
 
-    fetch("/api/profile/updateProfile", {
+    fetch("/api/files/addSingleMulterFile", {
       method: "POST",
       body: formData,
     });
@@ -34,6 +34,7 @@ const FileUpload = () => {
 
   return (
     <>
+      <p>Single File Upload using Multer</p>
       <form encType="multipart/form-data" onSubmit={submitFiles}>
         <input type="file" name="file1" onChange={handleFileUpload} />
         <input
@@ -45,6 +46,6 @@ const FileUpload = () => {
       </form>
     </>
   );
-};
+}
 
-export default FileUpload;
+export default MulterFileUpload;
