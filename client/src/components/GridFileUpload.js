@@ -29,7 +29,7 @@ function GridFileUpload() {
       })
       .then((data) => {
         console.log(data);
-        setText(data.msg);
+        setText("");
       });
   };
 

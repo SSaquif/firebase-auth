@@ -30,6 +30,7 @@ const Navbar = () => {
           )}
           <NavItems to="/multerFileUpload">Multer</NavItems>
           <NavItems to="/multerGridFileUpload">Multer+Grid</NavItems>
+          <NavItems to="/multerGridFileRetrieve">Grid+Retrieve</NavItems>
         </Right>
       </NavWrapper>
     </>
@@ -49,7 +50,7 @@ const Left = styled.div`
 
 const Right = styled.div`
   color: blue;
-  flex: 1;
+  flex: 4;
   display: flex;
   justify-content: flex-end;
   border: 2px solid red;

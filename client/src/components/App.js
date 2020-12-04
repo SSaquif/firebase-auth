@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Navbar from "./Navbar";
 import MulterFileUpload from "./MulterFileUpload";
 import GridFileUpload from "./GridFileUpload";
+import GridFileRetrieval from "./GridFileRetrieval";
 import Profile from "./Profile";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -31,6 +32,9 @@ const App = () => {
             </Route>
             <Route path="/multerGridFileUpload">
               <GridFileUpload />
+            </Route>
+            <Route path="/multerGridFileRetrieve">
+              <GridFileRetrieval />
             </Route>
           </Switch>
         </>
