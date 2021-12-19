@@ -1,5 +1,15 @@
 # Firebase Auth
 
+## Big UPDATE
+
+> Firebase has fundamentally changed their SDK in version 9, It internally uses a a functional programming approach now to reduce bundle size via Tree Shaking. Use the following [video](https://www.youtube.com/watch?v=rQvOAnNvcNQ) to get started with firebase
+
+<details><summary><b>Old Readme</b></summary>
+  
+## Intro
+
+Begins here
+
 :exclamation: :exclamation: Please DO NOT copy and paste code. Very Important you understand what's going on. :exclamation: :exclamation:
 
 :exclamation: :exclamation: **I have updated this repo on August 24 10:00 PM --ish** :exclamation: :exclamation:
@@ -182,3 +192,4 @@ When the user is logged in, we should be able to access some unique information 
 You can run this app after to **add a firebaseConfig.js file in the src folder**, and find out who you are thanks to google :grin:
 
 The sign in and sign up using email doesn't work. If you want you can play around with that, but I suggest you work on the project.
+</details>
